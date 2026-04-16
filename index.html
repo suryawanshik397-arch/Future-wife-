@@ -2,96 +2,149 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Future Wife 💖</title>
+<title>For My Love ❤️</title>
+
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Arial', sans-serif;
-        text-align: center;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        height: 100vh;
-        overflow: hidden;
-    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  background: black;
+  color: white;
+}
 
-    h1 {
-        margin-top: 60px;
-        color: #fff;
-        font-size: 32px;
-    }
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
 
-    p {
-        color: #fff;
-        font-size: 20px;
-        margin: 20px;
-    }
+.active {
+  display: flex;
+}
 
-    .btn {
-        padding: 12px 25px;
-        font-size: 18px;
-        border: none;
-        border-radius: 25px;
-        cursor: pointer;
-        margin: 15px;
-        transition: 0.3s;
-    }
+h1, h2 {
+  animation: fadeIn 2s;
+}
 
-    #yesBtn {
-        background-color: #28a745;
-        color: white;
-    }
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: #ff4d6d;
+  color: white;
+}
 
-    #noBtn {
-        background-color: #dc3545;
-        color: white;
-        position: absolute;
-    }
+button:hover {
+  transform: scale(1.1);
+}
 
-    .hidden {
-        display: none;
-    }
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
 
-    #loveMsg {
-        font-size: 26px;
-        color: #fff;
-        margin-top: 30px;
-    }
+/* Floating hearts */
+.heart {
+  position: absolute;
+  color: red;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% {transform: translateY(100vh);}
+  100% {transform: translateY(-10vh);}
+}
 </style>
 </head>
+
 <body>
 
-<h1>Hey Future Wife 😘</h1>
-<p>I know sometimes I act stupid… but one thing is always true ❤️</p>
-<p><b>I Love You So Much 💖</b></p>
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3">
+</audio>
 
-<h2>Will you always stay with me? 🥺</h2>
+<!-- Screen 1 -->
+<div class="screen active" id="s1">
+  <h1>Hey Dipu ❤️</h1>
+  <button onclick="next(2)">Tap to Start</button>
+</div>
 
-<button id="yesBtn" class="btn">Yes 😍</button>
-<button id="noBtn" class="btn">No 😜</button>
+<!-- Screen 2 -->
+<div class="screen" id="s2">
+  <h2 id="typing"></h2>
+  <button onclick="next(3)">Next</button>
+</div>
 
-<div id="loveMsg" class="hidden">
-    Yaaaay!!! 😍💖<br>
-    Now you are officially mine forever 😘<br>
-    I promise to love you, irritate you, and never leave you ❤️
+<!-- Screen 3 -->
+<div class="screen" id="s3">
+  <h2>You are my everything 💕</h2>
+  <button onclick="next(4)">Next</button>
+</div>
+
+<!-- Screen 4 -->
+<div class="screen" id="s4">
+  <h1>Will you be mine forever? 💍</h1>
+  <button onclick="yes()">Yes 😍</button>
+  <button id="no">No 😜</button>
+</div>
+
+<!-- Screen 5 -->
+<div class="screen" id="s5">
+  <h1>Yayyyyy 🥹❤️</h1>
+  <h2>I Love You Forever 💖</h2>
 </div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const loveMsg = document.getElementById("loveMsg");
+function next(n){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("s"+n).classList.add("active");
+}
 
-// Move "No" button randomly
-noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+// typing effect
+let text = "I may not be perfect, but my love for you is real ❤️";
+let i = 0;
+function type(){
+  if(i < text.length){
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type, 50);
+  }
+}
+type();
+
+// yes click
+function yes(){
+  next(5);
+}
+
+// moving NO button
+let no = document.getElementById("no");
+no.addEventListener("mouseover", ()=>{
+  no.style.position = "absolute";
+  no.style.left = Math.random()*80 + "%";
+  no.style.top = Math.random()*80 + "%";
 });
 
-// On Yes click
-yesBtn.addEventListener("click", () => {
-    loveMsg.classList.remove("hidden");
-});
+// floating hearts
+setInterval(()=>{
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random()*100 + "%";
+  heart.style.fontSize = (Math.random()*20+10)+"px";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>{heart.remove()},5000);
+},300);
 </script>
 
 </body>
